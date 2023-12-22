@@ -23,6 +23,7 @@ public class BancoDadosUsuarios implements BancoDados{
 			System.out.println("O usuário com ID = " + u.getId() + " foi adicionado!");
 		} else {
 			System.out.println("O objeto buscado não existe ou não é um usuário!");
+			throw new IllegalArgumentException("O banco de dados foi incapaz de inserir um usuário adequadamente.");
 		}
 	}
 
@@ -40,6 +41,11 @@ public class BancoDadosUsuarios implements BancoDados{
 
 	@Override
 	public void lista(int id) {
+		if(tamanho() == 0) {
+			System.out.println("O banco de dados de usuários está vazio!");
+			return;
+		}
+		
 		Object o = busca(id);
 		if(o != null && o instanceof Usuario) {
 			Usuario u = (Usuario) o;
@@ -51,6 +57,11 @@ public class BancoDadosUsuarios implements BancoDados{
 
 	@Override
 	public void listaTudo() {
+		if(tamanho() == 0) {
+			System.out.println("O banco de dados de usuários está vazio!");
+			return;
+		}
+		
 		for(Usuario u: banco) {
 			u.listarUsuario();
 		}

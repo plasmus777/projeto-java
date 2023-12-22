@@ -23,6 +23,7 @@ private int cont = 0;
 			System.out.println("O produto com ID = " + p.getId() + " foi adicionado!");
 		} else {
 			System.out.println("O objeto buscado não existe ou não é um produto!");
+			throw new IllegalArgumentException("O banco de dados foi incapaz de inserir um produto adequadamente.");
 		}
 	}
 
@@ -40,6 +41,10 @@ private int cont = 0;
 
 	@Override
 	public void lista(int id) {
+		if(tamanho() == 0) {
+			System.out.println("O banco de dados de produtos está vazio!");
+			return;
+		}
 		Object o = busca(id);
 		if(o != null && o instanceof Produto) {
 			Produto p = (Produto) o;
@@ -51,6 +56,9 @@ private int cont = 0;
 
 	@Override
 	public void listaTudo() {
+		if(tamanho() == 0) {
+			System.out.println("O banco de dados de produtos está vazio!");
+		}
 		for(Produto p: banco) {
 			p.listarProduto();
 		}
