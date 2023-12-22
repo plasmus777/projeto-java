@@ -77,4 +77,12 @@ private int cont = 0;
 		}
 	}
 	
+	public void buscarProdutos(int vendedor) {
+		for(Produto p: banco) {
+			if(p.getIdVendedor() == vendedor) {
+				p.listarProduto();
+			}
+		}
+	}
+	
 }

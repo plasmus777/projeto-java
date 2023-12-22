@@ -3,15 +3,16 @@ package produtos;
 public class Produto {
 	
 	private String nome;
-	private int id, quantidade;
+	private int id, quantidade, idVendedor;
 	private float preco;
 	
-	public Produto(String nome, int quantidade, float preco){
+	public Produto(String nome, int quantidade, float preco, int idVendedor){
 		this.nome = nome;
 		this.quantidade = quantidade;
 		this.preco = preco;
+		this.idVendedor = idVendedor;
 	}
-	
+
 	public void adicionar(int quant) {
 		setQuantidade(quantidade + quant);
 		System.out.println("*******************************");
@@ -51,6 +52,14 @@ public class Produto {
 		this.id = id;
 	}
 	
+	public int getIdVendedor() {
+		return idVendedor;
+	}
+
+	public void setIdVendedor(int idVendedor) {
+		this.idVendedor = idVendedor;
+	}
+	
 	public boolean podePagar(float oferta, int quant) {
 		if(oferta >= preco*quant && quant <= quantidade)return true;
 		else return false;
@@ -65,6 +74,8 @@ public class Produto {
 			System.out.println("**********************************");
 			System.out.println("O produto " + nome + " teve " + quant + " unidades vendidas (R$ " + preco + " cada),"
 					+ " somando um total de R$ " + total + ". O troco será de R$ " + troco + ".");
+			System.out.println("ID da compra: " + id);
+			System.out.println("ID do vendedor: " + idVendedor);
 			System.out.println("**********************************");
 		} else {
 			System.out.println("**********************************");
@@ -77,6 +88,7 @@ public class Produto {
 	public void listarProduto() {
 		System.out.println("*******************************");
 		System.out.println("ID do produto: " + id);
+		System.out.println("ID do vendedor: " + idVendedor);
 		System.out.println("Produto: " + nome);
 		System.out.println("Quantidade em estoque: " + quantidade);
 		System.out.println("Preço por unidade: " + preco);

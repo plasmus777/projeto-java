@@ -63,59 +63,9 @@ public class SistemaVendas {
 				}
 			} else {
 				if(usuarioLogado.getTipo() == 1) {
-					System.out.println("\n*************************************");
-					System.out.println("          Menu do Comprador");
-					System.out.println("*************************************");
-					System.out.println("Por favor, digite sua opção (1 - 4):");
-					System.out.println("1 - Comprar produto");
-					System.out.println("2 - Buscar produtos");
-					System.out.println("3 - Listar todos os produtos da loja");
-					System.out.println("4 - Logout");
-					opcao = s.nextInt();
-					
-					switch(opcao) {
-						case 1:
-							System.out.println("Por favor, digite o ID do produto a ser comprado (verifique o ID com uma busca antes):");
-							idProduto = s.nextInt();
-							Produto p = (Produto)bdP.busca(idProduto);
-							if(p != null && p instanceof Produto) {
-								System.out.println("**********************************");
-								System.out.println("Você está comprando: " + p.getNome());
-								System.out.println("Preço por unidade: " + p.getPreco());
-								System.out.println("Total no estoque: " + p.getQuantidade() + " unidades");
-								System.out.println("**********************************");
-								System.out.println("Digite a quantidade que deseja comprar:");
-								quantProduto = s.nextInt();
-								System.out.println("Digite sua oferta para pagamento (R$):");
-								oferta = s.nextInt();
-								
-								p.comprarProduto(oferta, quantProduto);
-								
-							}
-							
-							break;
-					
-						case 2:
-							System.out.println("Por favor, digite o termo de busca:");
-							s.skip("\\R?");
-							nomeProduto = s.nextLine();
-							bdP.buscarProdutos(nomeProduto);
-							break;
-							
-						case 3:
-							bdP.listaTudo();
-							break;
-							
-						case 4:
-							System.out.println("Saindo do usuário " + usuarioLogado.getNome() + "...");
-							usuarioLogado = null;
-							break;
-							
-						default:
-							System.out.println("A opção selecionada não existe!");
-					}
+					comprar();
 				} else if(usuarioLogado.getTipo() == 2) {
-					
+					vender();
 				}
 			}
 		}
@@ -190,7 +140,7 @@ public class SistemaVendas {
 	}
 	
 	//Cria um produto no sistema de compras e vendas
-	public static void cadastroProduto() {
+	public static void cadastrarProduto() {
 		System.out.println("\n*************************************");
 		System.out.println("        Cadastro de produto");
 		System.out.println("*************************************");
@@ -202,17 +152,155 @@ public class SistemaVendas {
 		System.out.println("Por favor, digite o preço por unidade do produto (R$):");
 		precoProduto = s.nextFloat();
 		
-		Produto p = new Produto(nomeProduto, quantProduto, precoProduto);
+		Produto p = new Produto(nomeProduto, quantProduto, precoProduto, usuarioLogado.getId());
 		bdP.adiciona(p);
 	}
 	
 	//O usuário logado pode realizar compras
 	public static void comprar() {
+		System.out.println("\n*************************************");
+		System.out.println("          Menu do Comprador");
+		System.out.println("*************************************");
+		System.out.println("Por favor, digite sua opção (1 - 4):");
+		System.out.println("1 - Comprar produto");
+		System.out.println("2 - Buscar produtos");
+		System.out.println("3 - Listar todos os produtos da loja");
+		System.out.println("4 - Logout");
+		opcao = s.nextInt();
 		
+		switch(opcao) {
+			case 1:
+				System.out.println("\n*************************************");
+				System.out.println("Por favor, digite o ID do produto a ser comprado (verifique o ID com uma busca antes):");
+				idProduto = s.nextInt();
+				Produto p = (Produto)bdP.busca(idProduto);
+				if(p != null && p instanceof Produto) {
+					System.out.println("**********************************");
+					System.out.println("Você está comprando: " + p.getNome());
+					System.out.println("Preço por unidade: " + p.getPreco());
+					System.out.println("Total no estoque: " + p.getQuantidade() + " unidades");
+					System.out.println("**********************************");
+					System.out.println("Digite a quantidade que deseja comprar:");
+					quantProduto = s.nextInt();
+					System.out.println("Digite sua oferta para pagamento (R$):");
+					oferta = s.nextInt();
+					
+					p.comprarProduto(oferta, quantProduto);
+					System.out.println("*************************************");
+				}
+				
+				break;
+		
+			case 2:
+				System.out.println("\n*************************************");
+				System.out.println("Por favor, digite o termo de busca:");
+				s.skip("\\R?");
+				nomeProduto = s.nextLine();
+				bdP.buscarProdutos(nomeProduto);
+				System.out.println("*************************************");
+				break;
+				
+			case 3:
+				System.out.println("\n*************************************");
+				System.out.println("         Produtos em estoque");
+				System.out.println("*************************************");
+				bdP.listaTudo();
+				System.out.println("*************************************");
+				break;
+				
+			case 4:
+				System.out.println("\n*************************************");
+				System.out.println("Saindo do usuário " + usuarioLogado.getNome() + "...");
+				usuarioLogado = null;
+				System.out.println("*************************************");
+				break;
+				
+			default:
+				System.out.println("\n*************************************");
+				System.out.println("A opção selecionada não existe!");
+				System.out.println("*************************************");
+		}
 	}
 	
 	//O usuário logado pode realizar vendas
 	public static void vender() {
+		System.out.println("\n*************************************");
+		System.out.println("          Menu do Vendedor");
+		System.out.println("*************************************");
+		System.out.println("Por favor, digite sua opção (1 - 4):");
+		System.out.println("1 - Anunciar produto");
+		System.out.println("2 - Reabastecer produto");
+		System.out.println("3 - Remover produto");
+		System.out.println("4 - Listar todos os meus produtos");
+		System.out.println("5 - Listar todos os produtos da loja");
+		System.out.println("6 - Logout");
+		opcao = s.nextInt();
 		
+		switch(opcao) {
+			case 1:
+				cadastrarProduto();
+				break;
+				
+			case 2:
+				System.out.println("\n*************************************");
+				System.out.println("Por favor, digite o ID do produto a ser reabastecido (verifique o ID com uma busca antes):");
+				idProduto = s.nextInt();
+				System.out.println("Por favor, digite o número de unidades para adicionar no estoque:");
+				quantProduto = s.nextInt();
+				System.out.println("*************************************");
+				
+				Produto p = (Produto) bdP.busca(idProduto);
+				if(p != null && p instanceof Produto) {
+					int antes = p.getQuantidade();
+					p.adicionar(quantProduto);
+					int depois = p.getQuantidade();
+					System.out.println("Estoque do produto \"" + p.getNome() + "\" foi aumentado de " + antes + "unidades para " + depois + " unidades.");
+				} else {
+					System.out.println("Ocorreu um erro ao reabastecer o estoque.");
+				}
+				System.out.println("*************************************");
+				break;
+				
+			case 3:
+				System.out.println("\n*************************************");
+				System.out.println("Por favor, digite o ID do produto a ser removido (verifique o ID com uma busca antes):");
+				idProduto = s.nextInt();
+				Produto p1 = (Produto)bdP.busca(idProduto);
+				if(p1 != null && p1 instanceof Produto) {
+					bdP.remove(idProduto);
+				} else {
+					System.out.println("Ocorreu um erro ao remover o produto.");
+				}
+				System.out.println("*************************************");
+				break;
+				
+			case 4:
+				System.out.println("\n*************************************");
+				System.out.println("            Seus produtos");
+				System.out.println("*************************************");
+				bdP.buscarProdutos(usuarioLogado.getId());
+				System.out.println("*************************************");
+				break;
+				
+			case 5:
+				System.out.println("\n*************************************");
+				System.out.println("          Produtos do estoque");
+				System.out.println("*************************************");
+				bdP.listaTudo();
+				System.out.println("*************************************");
+				break;
+				
+			case 6:
+				System.out.println("\n*************************************");
+				System.out.println("Saindo do usuário " + usuarioLogado.getNome() + "...");
+				usuarioLogado = null;
+				System.out.println("*************************************");
+				break;
+				
+			default:
+				System.out.println("\n*************************************");
+				System.out.println("A opção selecionada não existe!");
+				System.out.println("*************************************");
+		}
 	}
 }
