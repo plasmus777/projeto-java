@@ -5,8 +5,7 @@ public abstract class Usuario {
 	
 	protected int id, tipo, idade;
 	
-	public Usuario(int id, int tipo, String nome, String email, String senha, int idade) {
-		this.id = id;
+	public Usuario(int tipo, String nome, String email, String senha, int idade) {
 		this.tipo = tipo;
 		this.nome = nome;
 		this.email = email;
@@ -62,5 +61,10 @@ public abstract class Usuario {
 		this.idade = idade;
 	}
 	
-	public abstract void listarUsuario();
+	public void listarUsuario() {
+		System.out.println("Usuário com ID = " + id + ":");
+		System.out.println("Nome: " + nome);
+		System.out.println("E-mail: " + email);
+		System.out.println("Idade: " + idade);
+	}
 }
